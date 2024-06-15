@@ -60,13 +60,10 @@ public class EmployeeTests {
         employees.add(employee);
         employeeMap.put("employees", employees);
 
-        // Mocking void method
         doNothing().when(employeeService).addEmployee(anyList());
 
-        // When
         ResponseEntity<String> response = employeeController.addEmployeeHandler(employeeMap);
 
-        // Then
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals("Employee added successfully!", response.getBody());
         verify(employeeService).addEmployee(anyList());
@@ -97,7 +94,6 @@ public class EmployeeTests {
 
         when(employeeRepository.findAll()).thenReturn(employees);
 
-        // Mock the service method call
         String dateString = "may-06-2022";
         Map<String, Object> mockResponse = new HashMap<>();
         mockResponse.put("USD", new ArrayList<>(List.of(employeeUSD)));
@@ -111,7 +107,7 @@ public class EmployeeTests {
         Map<String, Object> response = employeeServiceSpy.getEligibleEmployees(dateString);
 
         // Assertions
-        assertEquals(2, response.size()); // Assuming 2 different currencies in mock data
+        assertEquals(2, response.size());
 
         // Assert for "USD" currency
         List<Employee> usdEmployees = (List<Employee>) response.get("USD");
